@@ -35,12 +35,11 @@ const autoscroll = () => {
   const scrollOffset = $messages.scrollTop + visibleHeight;
 
   if (containerHeight - newMessageHeight <= scrollOffset) {
-    $messages.scrollTop = $messages.scrollHeight; 
+    $messages.scrollTop = $messages.scrollHeight;
   }
 };
 
 socket.on('message', (message) => {
-  console.log(message);
   const html = Mustache.render(messageTemplate, {
     username: message.username,
     message: message.text,
@@ -51,7 +50,6 @@ socket.on('message', (message) => {
 });
 
 socket.on('locationMessage', (message) => {
-  console.log(message);
   const html = Mustache.render(locationMessageTemplate, {
     username: message.username,
     url: message.url,
@@ -102,7 +100,7 @@ $sendLocationButton.addEventListener('click', () => {
       latitude: position.coords.latitude,
       longitude: position.coords.longitude
     }, () => {
-      $sendLocationButton.remove('disabled');
+      $sendLocationButton.removeAttribute('disabled');
       console.log('Location shared!');
     });
   })
@@ -110,7 +108,7 @@ $sendLocationButton.addEventListener('click', () => {
 
 
 socket.emit('join', { username, room }, (error) => {
-  if(error) {
+  if (error) {
     alert(error);
     location.href = '/'
   }
